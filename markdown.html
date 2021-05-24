@@ -6,50 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/marked"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Markdown notebook</title>
-    <style>
-
-        body{
-            margin: 0;
-        }
-        .notebook,.input,.markdown{
-            height: 1000px;
-        } 
-
-        .notebook{
-            width: 20%;
-            background-color: aqua;
-            float: left;
-        }
-
-        .input{
-            width: 40%;
-            float: left;
-            background-color: bisque;
-        }
-
-        .markdown{
-            width: 40%;
-            float:right;
-            background-color: blanchedalmond;
-        }
-
-
-
-    </style>
+    
 </head>
 
 <body>
     <div id="notebook">
         <div class="notebook">notebook</div>
-        <div class="input">input</div>
-        <div class="markdown">markDown</div>
+        <div class="input">
+            <textarea v-model="content">
+            </textarea>
+        </div>
+        <div class="markdown" v-text="notePreview">
+            
+        </div>
     </div>
 
 
     <script>
+        const html=marked('**Bold** *Italic* [link](http://vuejs.org/)')
+        console.log(html)
         var vm=new Vue({
             el:"#notebook",
+            data:{
+                content:'this is a note'
+            },
+            computed:{
+                notePreview(){
+                    return marked(this.content)
+                }
+            }
         })
     
     </script>
