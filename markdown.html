@@ -8,32 +8,29 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <title>Markdown notebook</title>
     <style>
+
+        body{
+            margin: 0;
+        }
         .notebook,.input,.markdown{
-            /* border: 1px solid red; */
             height: 1000px;
         } 
 
         .notebook{
             width: 20%;
-            position: absolute;
-            left:0;
-            top:0;
             background-color: aqua;
+            float: left;
         }
 
         .input{
             width: 40%;
-            position: absolute;
-            left: 20%;
-            top:0;
+            float: left;
             background-color: bisque;
         }
 
         .markdown{
             width: 40%;
-            position: absolute;
-            left: 60%;
-            top: 0;
+            float:right;
             background-color: blanchedalmond;
         }
 
