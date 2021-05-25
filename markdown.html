@@ -9,45 +9,14 @@
     <script src="https://unpkg.com/marked"></script>
     <link rel="stylesheet" href="style.css">
     <title>Markdown notebook</title>
-    <style>
-
-        body{
-            margin: 0;
-        }
-
-        .notebook,.input,.markdown{
-            height: 1000px;
-        } 
-
-        #notebook{
-            display: flex;
-        }
-
-        .notebook{
-            width: 20%;
-            background-color: aqua;
-        }
-
-        .input{
-            width: 40%;
-            background-color: bisque;
-        }
-
-        .markdown{
-            width: 40%;
-            background-color: blanchedalmond;
-        }
-
-
-
-    </style>
 </head>
 
 <body>
     <div id="notebook">
         <div class="notebook">notebook</div>
         <div class="input">
-            <textarea v-model="content">
+            <textarea class="inputText">
+
             </textarea>
         </div>
         <div class="markdown" v-text="notePreview">
@@ -57,18 +26,9 @@
 
 
     <script>
-        const html=marked('**Bold** *Italic* [link](http://vuejs.org/)')
-        console.log(html)
         var vm=new Vue({
             el:"#notebook",
-            data:{
-                content:'this is a note'
-            },
-            computed:{
-                notePreview(){
-                    return marked(this.content)
-                }
-            }
+        
         })
     
     </script>
