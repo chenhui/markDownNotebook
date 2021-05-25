@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+}
+.notebook,
+.input > *,
+.markdown {
+  height: 1000px;
+}
+
+.notebook {
+  width: 20%;
+  background-color: aqua;
+  float: left;
+}
+
+.input > * {
+  width: 40%;
+  float: left;
+  background-color: bisque;
+}
+
+.markdown {
+  width: 39%;
+  float: right;
+  background-color: blanchedalmond;
+}
