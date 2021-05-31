@@ -13,7 +13,12 @@
 
 <body>
     <div id="notebook">
-        <div class="notebook">notebook</div>
+        <div class="notebook">
+            <div>
+                <button v-bind:title="addButtonTitle" v-on:click="addNote">Add Note</button>
+                <div v-for="note of notes">{{note.title}}</div>
+            </div>
+        </div>
         <div class="input">
             <textarea class="inputText" v-model="content">
             </textarea>
@@ -25,21 +30,62 @@
 
     <script>
 
-        const html=marked('**hello**')
-        console.log(html)
+        var vm = new Vue({
 
-        var vm=new Vue({
-            el:"#notebook",
-            data:{
-               content:"" 
+            created() {
+                this.content = localStorage.getItem('content') || 'You can write in **markdown**'
             },
-            computed:{
-                previewMarked(){
+
+            el: "#notebook",
+
+            data: {
+                content: "",
+                notes: [],
+                items:[
+                    {title:'item 1'},
+                    {title:'item 2'},
+                    {title:'item 3'},
+                ]
+            },
+
+            computed: {
+                previewMarked() {
                     return marked(this.content)
-                }   
+                },
+
+                addButtonTitle(){
+                    return this.notes.length +'  notebook' 
+                },
+            },
+
+            watch: {
+                content: {
+                    handler: 'saveNote',
+                }
+            },
+
+            methods: {
+                addNote() {
+                    const time = Date.now()
+                    const note = {
+                        id: String(time),
+                        title: 'New note' + (this.notes.length + 1),
+                        content: '**Hi!**',
+                        created: time,
+                        favorite: false,
+                    }
+                    this.notes.push(note)
+                },
+
+                saveNote() {
+                    console.log('saving note:', this.content)
+                    localStorage.setItem('content', this.content)
+                }
             }
         })
-    
+
+        console.log('restored noted:', localStorage.getItem('content'))
+
     </script>
 
 </body>
