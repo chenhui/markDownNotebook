@@ -22,6 +22,11 @@
             </div>
         </div>
         <div class="input">
+            <!-- <div> -->
+                <!-- <input type="text" placeholder="Note Name" v-model="selectedNote.title"> -->
+            <!-- </div> -->
+
+            <!-- <button @click="removeNote" title="Remove note">delete</button> -->
             <textarea class="inputText" v-model="selectedNote.content" v-if="selectedNote">
             </textarea>
         </div>
@@ -34,9 +39,9 @@
 
         var vm = new Vue({
 
-            created() {
-                this.content = localStorage.getItem('content') || 'You can write in **markdown**'
-            },
+            // created() {
+            //     this.content = localStorage.getItem('content') || 'You can write in **markdown**'
+            // },
 
             el: "#notebook",
 
@@ -88,8 +93,9 @@
                 },
 
                 saveNote() {
-                    console.log('saving note:', this.content)
-                    localStorage.setItem('content', this.content)
+                    console.log('saving notes:', this.notes)
+                    localStorage.setItem('notes',JSON.stringify(this.notes))
+                    // localStorage.setItem('content', this.content)
                 },
 
                 selectNote(note){
@@ -104,7 +110,7 @@
             }
         })
 
-        console.log('restored noted:', localStorage.getItem('content'))
+        // console.log('restored noted:', localStorage.getItem('content'))
 
     </script>
 
