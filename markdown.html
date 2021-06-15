@@ -14,105 +14,36 @@
 <body>
     <div id="notebook">
         <div class="notebook">
+
             <div>
                 <button v-bind:title="addButtonTitle" v-on:click="addNote">Add Note</button>
-                <div @click="selectNote(note)"  class="note"
-                :class="{selected:note===selectedNote}" 
-                v-for="note of notes">{{note.title}}</div>
+                <div @click="selectNote(note)" class="note" :class="{selected:note===selectedNote}"
+                    v-for="note of notes">{{note.title}}</div>
             </div>
         </div>
+
         <div class="input">
-            <!-- <div> -->
-                <!-- <input type="text" placeholder="Note Name" v-model="selectedNote.title"> -->
-            <!-- </div> -->
 
-            <!-- <button @click="removeNote" title="Remove note">delete</button> -->
-            <textarea class="inputText" v-model="selectedNote.content" v-if="selectedNote">
-            </textarea>
+            <template v-if="selectedNote">
+                <div>
+                    <input type="text" placeholder="note name" v-model="selectedNote.title">
+                    <button @click="removeNote">delete</button>
+                </div>
+
+                <textarea class="inputText" v-model="selectedNote.content" >
+                </textarea>
+
+                <div class="markdown" v-html="previewMarked">
+                </div>
+
+            </template>
+
         </div>
-        <div class="markdown" v-html="previewMarked" v-if="selectedNote">
-        </div>
-    </div>
 
 
-    <script>
 
-        var vm = new Vue({
 
-            // created() {
-            //     this.content = localStorage.getItem('content') || 'You can write in **markdown**'
-            // },
-
-            el: "#notebook",
-
-            data: {
-                content: "",
-                notes:JSON.parse(localStorage.getItem('notes')) || [],
-                selectedId:localStorage.getItem('selected-id') ||  null,
-            },
-
-            computed: {
-                previewMarked() {
-                    return this.selectedNote ?  marked(this.selectedNote.content) :''
-                },
-
-                addButtonTitle(){
-                    return this.notes.length +'  notebook' 
-                },
-
-                selectedNote(){
-                    return this.notes.find(note=>note.id===this.selectedId)
-                }
-            },
-
-            watch: {
-                content: {
-                    handler: 'saveNote',
-                },
-                notes:{
-                    handler:"saveNotes",
-                    deep:true,
-                },
-
-                selectedId(val){
-                    localStorage.setItem('selected-id',val)
-                }
-            },
-
-            methods: {
-                addNote() {
-                    const time = Date.now()
-                    const note = {
-                        id: String(time),
-                        title: 'New note' + (this.notes.length + 1),
-                        content: '**Hi!**',
-                        created: time,
-                        favorite: false,
-                    }
-                    this.notes.push(note)
-                },
-
-                saveNote() {
-                    console.log('saving notes:', this.notes)
-                    localStorage.setItem('notes',JSON.stringify(this.notes))
-                    // localStorage.setItem('content', this.content)
-                },
-
-                selectNote(note){
-                    this.selectedId=note.id,
-                    console.log(this.selectedId)
-                },
-
-                saveNotes(){
-                    localStorage.setItem('notes',JSON.stringify(this.notes))
-                    console.log('Notes saved: ',new Date())
-                }
-            }
-        })
-
-        // console.log('restored noted:', localStorage.getItem('content'))
-
-    </script>
+        <script src="./notebook.js"></script>
 
 </body>
 
