@@ -42,8 +42,8 @@
 
             data: {
                 content: "",
-                notes: [],
-                selectedId:null,
+                notes:JSON.parse(localStorage.getItem('notes')) || [],
+                selectedId:localStorage.getItem('selected-id') ||  null,
             },
 
             computed: {
@@ -63,6 +63,14 @@
             watch: {
                 content: {
                     handler: 'saveNote',
+                },
+                notes:{
+                    handler:"saveNotes",
+                    deep:true,
+                },
+
+                selectedId(val){
+                    localStorage.setItem('selected-id',val)
                 }
             },
 
@@ -87,6 +95,11 @@
                 selectNote(note){
                     this.selectedId=note.id,
                     console.log(this.selectedId)
+                },
+
+                saveNotes(){
+                    localStorage.setItem('notes',JSON.stringify(this.notes))
+                    console.log('Notes saved: ',new Date())
                 }
             }
         })
